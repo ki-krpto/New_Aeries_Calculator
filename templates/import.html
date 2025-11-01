@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}Import Grades - Aeries Calculator{% endblock %}
+
+{% block content %}
+<div class="import-container">
+    <h1>Import Aeries Grades</h1>
+    
+    <div class="instructions">
+        <h3>How to Import:</h3>
+        <ol>
+            <li>Go to Aeries and navigate to your Gradebook Details page</li>
+            <li>Select all the text on the page (Ctrl+A or Cmd+A)</li>
+            <li>Copy it (Ctrl+C or Cmd+C)</li>
+            <li>Paste it into the text box below</li>
+            <li>Click "Import Grades"</li>
+        </ol>
+    </div>
+    
+    <form method="POST" class="import-form">
+        <div class="form-group">
+            <label for="aeries_text">Paste your Aeries gradebook here:</label>
+            <textarea id="aeries_text" name="aeries_text" rows="15" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Import Grades</button>
+        <a href="{{ url_for('dashboard') }}" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+{% endblock %}

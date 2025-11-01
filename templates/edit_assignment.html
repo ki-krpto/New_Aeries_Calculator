@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block title %}Edit Assignment - Aeries Calculator{% endblock %}
+
+{% block content %}
+<div class="form-container">
+    <h1>Edit Assignment</h1>
+    
+    <form method="POST" class="assignment-form">
+        <div class="form-group">
+            <label for="description">Assignment Description:</label>
+            <input type="text" id="description" name="description" value="{{ assignment['description'] }}" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="category_id">Category:</label>
+            <select id="category_id" name="category_id" required>
+                {% for category in categories %}
+                    <option value="{{ category['id'] }}" {% if category['id'] == assignment['category_id'] %}selected{% endif %}>
+                        {{ category['name'] }} ({{ category['weight'] }}%)
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+        
+        <div class="form-group">
+            <label for="points_earned">Points Earned:</label>
+            <input type="number" step="0.01" id="points_earned" name="points_earned" 
+                   value="{{ assignment['points_earned'] if assignment['points_earned'] is not none else '' }}" 
+                   placeholder="Leave empty if not graded yet">
+        </div>
+        
+        <div class="form-group">
+            <label for="points_possible">Points Possible:</label>
+            <input type="number" step="0.01" id="points_possible" name="points_possible" 
+                   value="{{ assignment['points_possible'] }}" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="comment">Comment (optional):</label>
+            <input type="text" id="comment" name="comment" value="{{ assignment['comment'] or '' }}">
+        </div>
+        
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Update Assignment</button>
+            <a href="{{ url_for('view_class', class_id=assignment['class_id']) }}" class="btn btn-secondary">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

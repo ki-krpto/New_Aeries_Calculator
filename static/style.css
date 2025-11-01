@@ -1,0 +1,430 @@
+/* Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #f5f5f5;
+}
+
+/* Navigation */
+.navbar {
+    background-color: #2c3e50;
+    color: white;
+    padding: 1rem 0;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-brand {
+    color: white;
+    text-decoration: none;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.nav-links {
+    display: flex;
+    gap: 1.5rem;
+}
+
+.nav-links a {
+    color: white;
+    text-decoration: none;
+    transition: opacity 0.3s;
+}
+
+.nav-links a:hover {
+    opacity: 0.8;
+}
+
+/* Container */
+.container {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 2rem;
+}
+
+/* Alerts */
+.alert {
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border-radius: 4px;
+}
+
+.alert-error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+.alert-success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+/* Buttons */
+.btn {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    text-decoration: none;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s;
+}
+
+.btn-primary {
+    background-color: #3498db;
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #2980b9;
+}
+
+.btn-secondary {
+    background-color: #95a5a6;
+    color: white;
+    margin-left: 0.5rem;
+}
+
+.btn-secondary:hover {
+    background-color: #7f8c8d;
+}
+
+.btn-small {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.875rem;
+    background-color: #3498db;
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-small:hover {
+    background-color: #2980b9;
+}
+
+.btn-danger {
+    background-color: #e74c3c;
+}
+
+.btn-danger:hover {
+    background-color: #c0392b;
+}
+
+/* Auth Pages */
+.auth-container {
+    max-width: 400px;
+    margin: 4rem auto;
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.auth-container h1 {
+    margin-bottom: 1.5rem;
+    text-align: center;
+    color: #2c3e50;
+}
+
+.auth-form .form-group {
+    margin-bottom: 1rem;
+}
+
+.auth-form label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #555;
+}
+
+.auth-form input {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+.auth-form button {
+    width: 100%;
+    margin-top: 1rem;
+}
+
+.auth-link {
+    text-align: center;
+    margin-top: 1rem;
+}
+
+.demo-info {
+    text-align: center;
+    margin-top: 1rem;
+    padding: 1rem;
+    background-color: #e8f4f8;
+    border-radius: 4px;
+    font-size: 0.9rem;
+}
+
+/* Dashboard */
+.dashboard h1 {
+    margin-bottom: 1.5rem;
+    color: #2c3e50;
+}
+
+.classes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
+
+.class-card {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.class-card h3 {
+    margin-bottom: 0.5rem;
+    color: #2c3e50;
+}
+
+.class-card .teacher {
+    color: #7f8c8d;
+    margin-bottom: 1rem;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 3rem;
+    color: #7f8c8d;
+    background: white;
+    border-radius: 8px;
+    margin-top: 2rem;
+}
+
+/* Import Page */
+.import-container {
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.instructions {
+    background-color: #e8f4f8;
+    padding: 1.5rem;
+    border-radius: 4px;
+    margin: 1.5rem 0;
+}
+
+.instructions h3 {
+    margin-bottom: 1rem;
+    color: #2c3e50;
+}
+
+.instructions ol {
+    margin-left: 1.5rem;
+}
+
+.instructions li {
+    margin-bottom: 0.5rem;
+}
+
+.import-form textarea {
+    width: 100%;
+    padding: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-family: monospace;
+    font-size: 0.9rem;
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: #555;
+}
+
+/* Class View */
+.class-view {
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.class-header {
+    border-bottom: 2px solid #ecf0f1;
+    padding-bottom: 1rem;
+    margin-bottom: 2rem;
+}
+
+.class-header h1 {
+    color: #2c3e50;
+    margin-bottom: 0.5rem;
+}
+
+.class-header .teacher {
+    color: #7f8c8d;
+    margin-bottom: 1rem;
+}
+
+.grade-summary {
+    background-color: #e8f4f8;
+    padding: 1.5rem;
+    border-radius: 4px;
+    margin-bottom: 2rem;
+}
+
+.grade-summary h2 {
+    color: #2c3e50;
+    margin-bottom: 1rem;
+}
+
+.grade-value {
+    color: #3498db;
+    font-size: 2rem;
+}
+
+.category-table, .assignments-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+}
+
+.category-table th,
+.category-table td,
+.assignments-table th,
+.assignments-table td {
+    padding: 0.75rem;
+    text-align: left;
+    border-bottom: 1px solid #ecf0f1;
+}
+
+.category-table th,
+.assignments-table th {
+    background-color: #34495e;
+    color: white;
+    font-weight: 500;
+}
+
+.category-table tr:hover,
+.assignments-table tr:hover {
+    background-color: #f8f9fa;
+}
+
+.assignments-section {
+    margin-top: 2rem;
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.section-header h2 {
+    color: #2c3e50;
+}
+
+.actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+/* Form Container */
+.form-container {
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.form-container h1 {
+    color: #2c3e50;
+    margin-bottom: 0.5rem;
+}
+
+.form-container h2 {
+    color: #7f8c8d;
+    font-size: 1.1rem;
+    margin-bottom: 1.5rem;
+}
+
+.assignment-form input,
+.assignment-form select,
+.assignment-form textarea {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+.form-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .nav-container {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .nav-links {
+        flex-direction: column;
+        gap: 0.5rem;
+        text-align: center;
+    }
+    
+    .classes-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .section-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+    
+    .category-table,
+    .assignments-table {
+        font-size: 0.875rem;
+    }
+    
+    .form-actions {
+        flex-direction: column;
+    }
+}
