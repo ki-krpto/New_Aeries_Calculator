@@ -13,7 +13,7 @@
             {% if current_user.is_authenticated %}
             <div class="nav-links">
                 <a href="{{ url_for('dashboard') }}">Dashboard</a>
-                <a href="{{ url_for('import_grades') }}">Import Grades</a>
+                <a href="{{ url_for('add_class') }}">Add Class</a>
                 <a href="{{ url_for('logout') }}">Logout ({{ current_user.username }})</a>
             </div>
             {% endif %}

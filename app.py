@@ -107,55 +107,39 @@ def dashboard():
     
     return render_template('dashboard.html', classes=classes)
 
-@app.route('/import', methods=['GET', 'POST'])
+@app.route('/add_class', methods=['GET', 'POST'])
 @login_required
-def import_grades():
-    """Import grades from Aeries copy-paste"""
+def add_class():
+    """Create a new class with manual grade entry"""
     if request.method == 'POST':
-        aeries_text = request.form.get('aeries_text')
+        class_name = request.form.get('class_name', '').strip()
+        teacher_name = request.form.get('teacher_name', '').strip()
         
-        # Parse the Aeries text
-        parsed_data = parse_aeries_grades(aeries_text)
-        
-        if not parsed_data['assignments']:
-            flash('No assignments found. Please check your input.', 'error')
-            return render_template('import.html')
-        
+        if not class_name:
+            flash('Please enter a class name', 'error')
+            return redirect(url_for('add_class'))
+            
+        # Create a new class with default category
         conn = get_db_connection()
-        
-        # Create new class
-        cursor = conn.cursor()
-        cursor.execute(
-            'INSERT INTO classes (user_id, class_name, teacher_name) VALUES (?, ?, ?)',
-            (current_user.id, parsed_data['class_name'], parsed_data['teacher_name'])
-        )
-        class_id = cursor.lastrowid
-        
-        # Create categories
-        category_ids = {}
-        for category_name, weight in parsed_data['categories'].items():
-            cursor.execute(
-                'INSERT INTO categories (class_id, name, weight) VALUES (?, ?, ?)',
-                (class_id, category_name, weight)
+        try:
+            conn.execute(
+                'INSERT INTO classes (user_id, class_name, teacher_name) VALUES (?, ?, ?)',
+                (current_user.id, class_name, teacher_name)
             )
-            category_ids[category_name] = cursor.lastrowid
-        
-        # Create assignments
-        for assignment in parsed_data['assignments']:
-            category_id = category_ids.get(assignment['category'])
-            if category_id:
-                cursor.execute(
-                    'INSERT INTO assignments (class_id, category_id, description, points_earned, points_possible, comment) VALUES (?, ?, ?, ?, ?, ?)',
-                    (class_id, category_id, assignment['description'], assignment['points_earned'], assignment['points_possible'], assignment['comment'])
-                )
-        
-        conn.commit()
-        conn.close()
-        
-        flash('Grades imported successfully!', 'success')
-        return redirect(url_for('view_class', class_id=class_id))
+            class_id = conn.execute('SELECT last_insert_rowid()').fetchone()[0]
+            
+            # Add default category
+            conn.execute(
+                'INSERT INTO categories (class_id, name, weight) VALUES (?, ?, ?)',
+                (class_id, 'Assignments', 100.0)
+            )
+            conn.commit()
+            flash(f'Class "{class_name}" created successfully!', 'success')
+            return redirect(url_for('view_class', class_id=class_id))
+        finally:
+            conn.close()
     
-    return render_template('import.html')
+    return render_template('add_class.html')
 
 @app.route('/class/<int:class_id>')
 @login_required
@@ -322,6 +306,42 @@ def delete_assignment(assignment_id):
     
     flash('Assignment deleted successfully!', 'success')
     return redirect(url_for('view_class', class_id=class_id))
+
+
+@app.route('/class/<int:class_id>/delete', methods=['POST'])
+@login_required
+def delete_class(class_id):
+    """Delete a class and all its assignments and categories"""
+    conn = get_db_connection()
+    
+    # First verify the class exists and belongs to the current user
+    class_info = conn.execute(
+        'SELECT * FROM classes WHERE id = ? AND user_id = ?',
+        (class_id, current_user.id)
+    ).fetchone()
+    
+    if not class_info:
+        flash('Class not found or you do not have permission to delete it', 'error')
+        conn.close()
+        return redirect(url_for('dashboard'))
+    
+    try:
+        # Delete all assignments for this class (cascading delete should handle this, but being explicit)
+        conn.execute('DELETE FROM assignments WHERE class_id = ?', (class_id,))
+        # Delete all categories for this class
+        conn.execute('DELETE FROM categories WHERE class_id = ?', (class_id,))
+        # Delete the class
+        conn.execute('DELETE FROM classes WHERE id = ?', (class_id,))
+        
+        conn.commit()
+        flash(f'Class "{class_info["class_name"]}" and all its data have been deleted.', 'success')
+    except Exception as e:
+        conn.rollback()
+        flash('An error occurred while deleting the class.', 'error')
+    finally:
+        conn.close()
+    
+    return redirect(url_for('dashboard'))
 
 if __name__ == '__main__':
     app.run(debug=True)
